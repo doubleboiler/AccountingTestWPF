@@ -2,6 +2,7 @@
 using AccountingTestWPF.Models;
 using AccountingTestWPF.Mvvm;
 using Prism.Events;
+using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -47,10 +48,8 @@ namespace AccountingTestWPF.ViewModels
 
         public ICommand AddUserCommand { get; private set; }
 
-        public UsersViewModel(IEventAggregator ea) : base(ea)
+        public UsersViewModel()
         {
-            LoadData();
-            IsAuthAdmin = AuthUser.IsAdmin;
             AddUserCommand = new RelayCommand(OnAddUser);
         }
 
@@ -63,6 +62,17 @@ namespace AccountingTestWPF.ViewModels
         private void LoadData()
         {
             Users = new ObservableCollection<User>(DataAccess.GetAllUsers());
+            Name = null;
+            IsAdmin = false;
+            Balance = 0;
+        }
+
+        public override void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            LoadData();
+            AuthUser = (User)navigationContext.Parameters["User"];
+            IsAuthAdmin = AuthUser.IsAdmin;
+            base.OnNavigatedTo(navigationContext);
         }
     }
 }

@@ -95,18 +95,21 @@ namespace AccountingTestWPF.Data
             {
                 var user = db.Users.FirstOrDefault(e => e.Id == userId);
                 var category = db.Categories.FirstOrDefault(e => e.Id == categoryId);
-                var recipient = db.Recipients.FirstOrDefault(e => e.Id == recipientId);
 
                 Operation op = new Operation()
                 {
                     User = user,
                     Category = category,
-                    Recipient = recipient,
                     IsIncome = isIncome,
                     OperationDate = DateTime.Now,
                     Sum = sum,
                     Note = note
                 };
+                if (recipientId != null)
+                {
+                    var recipient = db.Recipients.FirstOrDefault(e => e.Id == recipientId);
+                    op.Recipient = recipient;
+                }
 
                 db.Operations.Add(op);
 

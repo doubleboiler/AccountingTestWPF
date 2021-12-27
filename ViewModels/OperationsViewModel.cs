@@ -1,9 +1,7 @@
 ﻿using AccountingTestWPF.Data;
-using AccountingTestWPF.Internal;
 using AccountingTestWPF.Models;
 using AccountingTestWPF.Mvvm;
-using Prism.Events;
-using Prism.Mvvm;
+using Prism.Regions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -23,10 +21,16 @@ namespace AccountingTestWPF.ViewModels
         private bool _isAuthAdmin;
         private string _note;
         private decimal _sum;
+        private List<Recipient> _recipientList;
+        private List<Category> _categoryList;
 
         #endregion
 
-        public List<Category> CategoryList { get; set; }
+        public List<Category> CategoryList
+        {
+            get => _categoryList;
+            set => SetProperty(ref _categoryList, value);
+        }
 
         public Category SelectedCategory
         {
@@ -34,7 +38,11 @@ namespace AccountingTestWPF.ViewModels
             set => SetProperty(ref _selectedCategory, value);
         }
 
-        public List<Recipient> RecipientList { get; set; }
+        public List<Recipient> RecipientList
+        {
+            get => _recipientList;
+            set => SetProperty(ref _recipientList, value);
+        }
 
         public Recipient SelectedRecipient
         {
@@ -75,15 +83,14 @@ namespace AccountingTestWPF.ViewModels
 
         public ICommand AddOperationCommand { get; private set; }
 
-        public OperationsViewModel(IEventAggregator ea) : base(ea)
+        public OperationsViewModel()
         {
-            LoadData();
-            IsAuthAdmin = AuthUser.IsAdmin;
+            AddOperationCommand = new RelayCommand(OnAddOperation, OnCanAddOperation);
+        }
 
-            if (CategoryList.Count != 0) SelectedCategory = CategoryList.FirstOrDefault();
-            if (RecipientList.Count != 0) SelectedRecipient = RecipientList.FirstOrDefault();
-
-            AddOperationCommand = new RelayCommand(OnAddOperation);
+        private bool OnCanAddOperation()
+        {
+            return Note != null && Sum > 0;
         }
 
         private void LoadData()
@@ -91,6 +98,11 @@ namespace AccountingTestWPF.ViewModels
             Operations = new ObservableCollection<Operation>(DataAccess.GetAllOperations());
             CategoryList = DataAccess.GetAllCategories();
             RecipientList = DataAccess.GetAllRecipients();
+            IsIncome = true;
+            Note = null;
+            Sum = 0;
+            if (CategoryList.Count != 0) SelectedCategory = CategoryList.FirstOrDefault();
+            SelectedRecipient = null;
         }
 
         private void OnAddOperation()
@@ -99,5 +111,12 @@ namespace AccountingTestWPF.ViewModels
             LoadData();
         }
 
+        public override void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            LoadData();
+            AuthUser = (User)navigationContext.Parameters["User"];
+            IsAuthAdmin = AuthUser.IsAdmin;
+            base.OnNavigatedTo(navigationContext);
+        }
     }
 }

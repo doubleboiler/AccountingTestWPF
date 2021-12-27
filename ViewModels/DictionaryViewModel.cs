@@ -45,28 +45,38 @@ namespace AccountingTestWPF.ViewModels
         {
             LoadData();
 
-            AddCatCommand = new RelayCommand(OnAddCategory);
-            AddRecCommand = new RelayCommand(OnAddRecipient);
+            AddCatCommand = new RelayCommand(OnAddCategory, OnCanAddCategory);
+            AddRecCommand = new RelayCommand(OnAddRecipient, OnCanAddRecipient);
+        }
+
+        private bool OnCanAddRecipient()
+        {
+            return RecipientName != null;
+        }
+
+        private bool OnCanAddCategory()
+        {
+            return CategoryName != null;
         }
 
         private void LoadData()
         {
             Categories = new ObservableCollection<Category>(DataAccess.GetAllCategories());
             Recipients = new ObservableCollection<Recipient>(DataAccess.GetAllRecipients());
+            RecipientName = null;
+            CategoryName = null;
         }
 
         private void OnAddRecipient()
         {
             DataAccess.AddRecipient(RecipientName);
             LoadData();
-            RecipientName = "";
         }
 
         private void OnAddCategory()
         {
             DataAccess.AddCategory(CategoryName);
             LoadData();
-            CategoryName = "";
         }
     }
 }

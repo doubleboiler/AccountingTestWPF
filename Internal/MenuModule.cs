@@ -1,7 +1,6 @@
 ﻿using AccountingTestWPF.Views;
 using Prism.Ioc;
 using Prism.Modularity;
-using Prism.Regions;
 
 namespace AccountingTestWPF.Internal
 {

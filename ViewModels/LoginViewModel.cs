@@ -1,10 +1,12 @@
 ﻿using AccountingTestWPF.Data;
 using AccountingTestWPF.Internal;
 using AccountingTestWPF.Models;
+using AccountingTestWPF.Mvvm;
 using Prism.Events;
 using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 
 namespace AccountingTestWPF.ViewModels
 {
@@ -14,6 +16,7 @@ namespace AccountingTestWPF.ViewModels
         private IEventAggregator _ea;
 
         public List<User> UserList { get; set; }
+        public ICommand LoginCommand { get; private set; }
 
         public User SelectedUser
         {
@@ -26,10 +29,15 @@ namespace AccountingTestWPF.ViewModels
             DataAccess.LoadDefaultData();
 
             _ea = ea;
-            _ea.GetEvent<UserAuthEvent>().Publish(SelectedUser);
 
             UserList = DataAccess.GetAllUsers();
             SelectedUser = UserList.FirstOrDefault();
+            LoginCommand = new RelayCommand(OnLogIn);
+        }
+
+        private void OnLogIn()
+        {
+            _ea.GetEvent<UserAuthEvent>().Publish(SelectedUser);
         }
     }
 }

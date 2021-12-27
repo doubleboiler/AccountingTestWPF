@@ -33,7 +33,7 @@
                 <DataGridTextColumn Header="Дата" Binding="{Binding Path=OperationDate, StringFormat=dd/MM/yy}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Действие" Binding="{Binding Path=IsIncome, Converter={StaticResource IncomeToStringConverterKey}}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Получатель" Binding="{Binding Path=Recipirnt.RecipientName}"
-                                    Visibility="{Binding Path=IsIncome, Converter={StaticResource BooleanToVisibilityConverterKey}, ConverterParameter='negate'}"
+                                    Visibility="{Binding Path=IsIncome, Converter={StaticResource BooleanToVisibilityConverterKey}, ConverterParameter=true}"
                                     IsReadOnly="True" />
                 <DataGridTextColumn Header="Описание" Binding="{Binding Path=Note}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Сумма" Binding="{Binding Path=Sum, StringFormat=C}" IsReadOnly="True" />
@@ -44,13 +44,13 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center"
                     HorizontalAlignment="Center">
             <TextBlock Text="Категория:" Margin="10 15" />
-            <ComboBox ItemsSource="{Binding Path=CategoryList}" DisplayMemberPath="CategoryName" SelectedItem="{Binding Path=SelectedCategory}" Margin="10 15" />
-            <TextBlock Text="Получатель:" Margin="10 15" 
-                       Visibility="{Binding Path=IsIncome, Converter={StaticResource BooleanToVisibilityConverterKey}, ConverterParameter='negate'}" />
-            <ComboBox ItemsSource="{Binding Path=RecipientList}" DisplayMemberPath="RecipientName" SelectedItem="{Binding Path=SelectedRecipient}" Margin="10 15"
-                      Visibility="{Binding Path=IsIncome, Converter={StaticResource BooleanToVisibilityConverterKey}, ConverterParameter='negate'}"/>
+            <ComboBox ItemsSource="{Binding Path=CategoryList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="CategoryName" SelectedItem="{Binding Path=SelectedCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10 15" />
             <CheckBox Content="Поступление" IsChecked="{Binding Path=IsIncome, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        Margin="10 16" />
+            <TextBlock Text="Получатель:" Margin="10 15" 
+                       Visibility="{Binding Path=IsIncome, Converter={StaticResource BooleanToVisibilityConverterKey}, ConverterParameter='negate'}" />
+            <ComboBox ItemsSource="{Binding Path=RecipientList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="RecipientName" SelectedItem="{Binding Path=SelectedRecipient, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10 15"
+                      Visibility="{Binding Path=IsIncome, Converter={StaticResource BooleanToVisibilityConverterKey}, ConverterParameter='negate'}"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center"
                     HorizontalAlignment="Center">
@@ -58,7 +58,7 @@
             <TextBox Text="{Binding Path=Note, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                      Width="150" TextWrapping="Wrap" Margin="10 15" />
             <TextBlock Text="Сумма:" Margin="10 15" />
-            <TextBox Text="{Binding Path=Note, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox Text="{Binding Path=Sum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Width="50" Margin="10 15" />
             <Button x:Name="Add_btn" Content="Добавить" Command="{Binding AddOperationCommand}" Margin="10 15" />
         </StackPanel>

@@ -1,18 +1,11 @@
-﻿using AccountingTestWPF.Internal;
-using AccountingTestWPF.Models;
-using Prism.Events;
+﻿using AccountingTestWPF.Models;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Prism.Regions;
 
 namespace AccountingTestWPF.ViewModels
 {
-    public class BaseViewModel : BindableBase
+    public class BaseViewModel : BindableBase, INavigationAware
     {
-        private IEventAggregator _ea;
         private User _authUser;
 
         public User AuthUser
@@ -21,15 +14,24 @@ namespace AccountingTestWPF.ViewModels
             set => SetProperty(ref _authUser, value);
         }
 
-        public BaseViewModel(IEventAggregator ea)
+        public BaseViewModel()
         {
-            _ea = ea;
-            _ea.GetEvent<UserAuthEvent>().Subscribe(OnAuthUser);
+
         }
 
-        private void OnAuthUser(User user)
+        public virtual void OnNavigatedTo(NavigationContext navigationContext)
         {
-            AuthUser = user;
+            
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public virtual void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            
         }
     }
 }

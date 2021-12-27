@@ -16,9 +16,8 @@
             <Button Command="{Binding NavigateCommand}" CommandParameter="DictionaryView" Margin="5">Справочник</Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="5" >
-            <TextBlock Text="Вы зашли под именем:" />
-            <TextBlock Text="{Binding AuthUser.FullName}" />
-            <Button x:Name="Logout_bnt" Content="Сменить пользователя" Margin="200 0 0 0" />
+            <TextBlock Text="Вы зашли под именем:" Margin="10 5" />
+            <TextBlock Text="{Binding AuthUser.FullName}" Margin="10 5" />
         </StackPanel>
         <ContentControl prism:RegionManager.RegionName="ContentRegion" Margin="5"  />
 
