@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="AccountingTestWPF.Views.DictionaryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="Categories" ColumnWidth="*" ItemsSource="{Binding Path=Categories, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Grid.Column="0" CanUserAddRows="False" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Категории" Binding="{Binding Path=CategoryName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="Recipients" ColumnWidth="*" ItemsSource="{Binding Path=Recipients, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Grid.Column="1" CanUserAddRows="False" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Имена получателей" Binding="{Binding Path=RecipientName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Vertical" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBox Text="{Binding Path=CategoryName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Width="100" Margin="5" />
+            <Button x:Name="AddCat_btn" Content="Добавить категорию" Command="{Binding AddCatCommand}" Margin="5" />
+            <TextBox Text="{Binding Path=RecipientName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Width="100" Margin="5 20 5 5" />
+            <Button x:Name="AddRec_btn" Content="Добавить получателя" Command="{Binding AddRecCommand}" Margin="5" />
+        </StackPanel>
+    </Grid>
+</UserControl>
