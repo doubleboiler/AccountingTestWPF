@@ -32,7 +32,7 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Дата" Binding="{Binding Path=OperationDate, StringFormat=dd/MM/yy}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Действие" Binding="{Binding Path=IsIncome, Converter={StaticResource IncomeToStringConverterKey}}" IsReadOnly="True" />
-                <DataGridTextColumn Header="Получатель" Binding="{Binding Path=Recipirnt.RecipientName}"
+                <DataGridTextColumn Header="Получатель" Binding="{Binding Path=Recipient.RecipientName}"
                                     Visibility="{Binding Path=IsIncome, Converter={StaticResource BooleanToVisibilityConverterKey}, ConverterParameter=true}"
                                     IsReadOnly="True" />
                 <DataGridTextColumn Header="Описание" Binding="{Binding Path=Note}" IsReadOnly="True" />
@@ -55,7 +55,7 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center"
                     HorizontalAlignment="Center">
             <TextBlock Text="Описание:" Margin="10 15" />
-            <TextBox Text="{Binding Path=Note, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox Text="{Binding Path=Note, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Width="150" TextWrapping="Wrap" Margin="10 15" />
             <TextBlock Text="Сумма:" Margin="10 15" />
             <TextBox Text="{Binding Path=Sum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

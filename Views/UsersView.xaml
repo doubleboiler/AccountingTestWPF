@@ -28,14 +28,14 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center"
                     HorizontalAlignment="Center">
             <TextBlock Text="Имя:" Margin="10 15" />
-            <TextBox Text="{Binding Path=Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Width="80" TextWrapping="Wrap" Margin="10 15" />
             <TextBlock Text="Баланс:" Margin="10 15" />
             <TextBox Text="{Binding Path=Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=C}"
                      Width="50" Margin="10 15" />
             <CheckBox Content="Администратор" IsChecked="{Binding Path=IsAdmin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        Margin="10 16" Visibility="{Binding Path=IsAuthAdmin, Converter={StaticResource BooleanToVisibilityConverterKey}}"/>
-            <Button x:Name="Add_btn" Content="Добавить" Command="{Binding AddOperationCommand}" Margin="10 15" />
+            <Button x:Name="Add_btn" Content="Добавить" Command="{Binding AddUserCommand}" Margin="10 15" />
         </StackPanel>
     </Grid>
 </UserControl>

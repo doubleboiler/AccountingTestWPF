@@ -3,6 +3,7 @@ using AccountingTestWPF.Models;
 using AccountingTestWPF.Mvvm;
 using Prism.Events;
 using Prism.Regions;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -50,7 +51,12 @@ namespace AccountingTestWPF.ViewModels
 
         public UsersViewModel()
         {
-            AddUserCommand = new RelayCommand(OnAddUser);
+            AddUserCommand = new RelayCommand(OnAddUser, OnCanAddUser);
+        }
+
+        private bool OnCanAddUser()
+        {
+            return Name != null;
         }
 
         private void OnAddUser()

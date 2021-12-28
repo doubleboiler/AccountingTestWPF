@@ -33,6 +33,8 @@ namespace AccountingTestWPF.ViewModels
             _ea = ea;
             _ea.GetEvent<UserAuthEvent>().Subscribe(OnAuthUser);
             _regionManager = regionManager;
+            _regionManager.RegisterViewWithRegion("ContentRegion", typeof(DictionaryView));
+
             NavigateCommand = new DelegateCommand<string>(OnRegionNavigate);
         }
 
@@ -50,7 +52,6 @@ namespace AccountingTestWPF.ViewModels
             if (path != null)
                 _regionManager.RequestNavigate("ContentRegion", path, navParameters);
 
-            _regionManager.RegisterViewWithRegion("ContentRegion", typeof(OperationsView));
         }
 
     }

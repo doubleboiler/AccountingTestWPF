@@ -102,11 +102,15 @@ namespace AccountingTestWPF.ViewModels
             Note = null;
             Sum = 0;
             if (CategoryList.Count != 0) SelectedCategory = CategoryList.FirstOrDefault();
-            SelectedRecipient = null;
+            if (RecipientList.Count != 0) SelectedRecipient = RecipientList.FirstOrDefault();
         }
 
         private void OnAddOperation()
         {
+            if (IsIncome)
+            {
+                SelectedRecipient = null;
+            }
             DataAccess.AddOperation(AuthUser.Id, SelectedCategory.Id, SelectedRecipient?.Id, IsIncome, Sum, Note);
             LoadData();
         }
